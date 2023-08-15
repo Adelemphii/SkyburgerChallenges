@@ -1,7 +1,6 @@
 package me.adelemphii.skyburgerchallenges.managers;
 
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -31,7 +30,6 @@ public class BossBarManager {
 
     public void updateBossBar() {
         if(bossBar != null) {
-            Bukkit.broadcast(Component.text(experienceManager.getLevels()));
             bossBar.setTitle("Total Levels: " + experienceManager.getLevels());
             bossBar.setProgress(1.0d);
         }
