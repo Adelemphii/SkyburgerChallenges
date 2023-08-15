@@ -1,8 +1,6 @@
 package me.adelemphii.skyburgerchallenges.managers;
 
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
 
@@ -30,12 +28,23 @@ public class WorldBorderManager {
         double newSize = calculateNewBorderSize(levels);
 
         WorldBorder worldBorder = world.getWorldBorder();
-        long timeInSeconds = (long) (Math.abs(worldBorder.getSize() - newSize) / 10.0);
-        Bukkit.broadcast(Component.text(timeInSeconds));
+        long timeInSeconds = calculateTimeInSeconds(worldBorder.getSize(), newSize);
         worldBorder.setSize(newSize, TimeUnit.SECONDS, timeInSeconds);
     }
 
     private double calculateNewBorderSize(int levels) {
         return Math.max(5.5, 5.5 + levels);
+    }
+
+    private long calculateTimeInSeconds(double currentSize, double newSize) {
+        double distance = Math.abs(newSize - currentSize);
+
+        if (distance <= 7) {
+            // For distances up to 7 blocks, use a constant speed of 1 block per second
+            return (long) distance;
+        } else {
+            // For distances larger than 7 blocks, adjust the speed as needed (e.g., 7 blocks per second)
+            return (long) (distance / 10);
+        }
     }
 }
