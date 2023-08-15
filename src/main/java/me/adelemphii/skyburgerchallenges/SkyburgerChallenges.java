@@ -2,17 +2,16 @@ package me.adelemphii.skyburgerchallenges;
 
 import co.aikar.commands.PaperCommandManager;
 import me.adelemphii.skyburgerchallenges.commands.CommandSkyburger;
-import me.adelemphii.skyburgerchallenges.listeners.ExperienceListener;
-import me.adelemphii.skyburgerchallenges.listeners.JoinLeaveListener;
-import me.adelemphii.skyburgerchallenges.listeners.PlayerDeathListener;
-import me.adelemphii.skyburgerchallenges.listeners.SkyburgerExperienceListener;
+import me.adelemphii.skyburgerchallenges.listeners.*;
 import me.adelemphii.skyburgerchallenges.managers.ExperienceManager;
+import me.adelemphii.skyburgerchallenges.managers.PunishmentManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SkyburgerChallenges extends JavaPlugin {
 
+    private PunishmentManager punishmentManager;
     private ExperienceManager experienceManager;
 
     private PaperCommandManager paperCommandManager;
@@ -25,6 +24,9 @@ public final class SkyburgerChallenges extends JavaPlugin {
         experienceManager.loadExperience();
         experienceManager.getBossBarManager().createBossBar();
 
+        this.punishmentManager = new PunishmentManager(this);
+        punishmentManager.loadPunishments();
+
         registerCommands();
         registerEvents();
     }
@@ -35,6 +37,10 @@ public final class SkyburgerChallenges extends JavaPlugin {
             experienceManager.saveExperience();
 
             Bukkit.getOnlinePlayers().forEach(player -> experienceManager.getBossBarManager().removePlayerFromBossBar(player));
+        }
+
+        if(punishmentManager != null) {
+            punishmentManager.savePunishments();
         }
     }
 
@@ -51,6 +57,7 @@ public final class SkyburgerChallenges extends JavaPlugin {
         pm.registerEvents(new PlayerDeathListener(this), this);
 
         pm.registerEvents(new SkyburgerExperienceListener(this), this);
+        pm.registerEvents(new SkyburgerHealthListener(this), this);
     }
 
     public PaperCommandManager getPaperCommandManager() {
@@ -59,5 +66,9 @@ public final class SkyburgerChallenges extends JavaPlugin {
 
     public ExperienceManager getExperienceManager() {
         return experienceManager;
+    }
+
+    public PunishmentManager getPunishmentManager() {
+        return punishmentManager;
     }
 }

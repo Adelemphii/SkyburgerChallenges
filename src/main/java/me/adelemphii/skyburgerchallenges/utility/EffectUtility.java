@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 public class EffectUtility {
 
     public static void revivePlayer(Player target, World overworld, SkyburgerChallenges plugin) {
-
         Location reviveLocation = overworld.getWorldBorder().getCenter().toHighestLocation();
 
         double radius = 2;

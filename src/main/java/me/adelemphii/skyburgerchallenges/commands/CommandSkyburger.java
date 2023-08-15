@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
+import me.adelemphii.skyburgerchallenges.objects.effects.PentagramEffect;
 import me.adelemphii.skyburgerchallenges.utility.EffectUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -43,5 +44,12 @@ public class CommandSkyburger extends BaseCommand {
     @CommandPermission("skyburger.admin")
     public void onRevive(Player player, Player target) {
         EffectUtility.revivePlayer(target, player.getWorld(), plugin);
+    }
+
+    @Subcommand("pentagram")
+    @CommandPermission("skyburger.admin")
+    public void onPentagram(Player player) {
+        PentagramEffect pentagramEffect = new PentagramEffect(player, 1); // Adjust the radius as needed
+        pentagramEffect.runTaskTimer(plugin, 0, 1L);
     }
 }

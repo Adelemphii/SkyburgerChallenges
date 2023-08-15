@@ -55,5 +55,7 @@ public class ReviveEffect extends BukkitRunnable {
         player.setHealth(10);
         player.setSaturation(20);
         player.teleport(location);
+
+        plugin.getPunishmentManager().decreaseMaxHealth(2);
     }
 }

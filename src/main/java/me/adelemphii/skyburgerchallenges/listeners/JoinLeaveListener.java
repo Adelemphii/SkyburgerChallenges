@@ -2,6 +2,7 @@ package me.adelemphii.skyburgerchallenges.listeners;
 
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
 import org.bukkit.WorldBorder;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +26,8 @@ public class JoinLeaveListener implements Listener {
         if(!worldBorder.isInside(player.getLocation())) {
             player.teleport(worldBorder.getCenter().toHighestLocation().add(0, 1, 0));
         }
+
+        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(plugin.getPunishmentManager().getMaxHealth());
     }
 
     @EventHandler
