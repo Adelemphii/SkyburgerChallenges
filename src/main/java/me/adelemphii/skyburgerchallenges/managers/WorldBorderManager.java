@@ -28,13 +28,14 @@ public class WorldBorderManager {
 
     private void updateWorldBorder(World world, int levels) {
         double newSize = calculateNewBorderSize(levels);
-        Bukkit.broadcast(Component.text(newSize));
 
         WorldBorder worldBorder = world.getWorldBorder();
-        worldBorder.setSize(newSize, TimeUnit.SECONDS, 10);
+        long timeInSeconds = (long) (Math.abs(worldBorder.getSize() - newSize) / 10.0);
+        Bukkit.broadcast(Component.text(timeInSeconds));
+        worldBorder.setSize(newSize, TimeUnit.SECONDS, timeInSeconds);
     }
 
     private double calculateNewBorderSize(int levels) {
-        return Math.min(5.5, 5.5 + levels);
+        return Math.max(5.5, 5.5 + levels);
     }
 }

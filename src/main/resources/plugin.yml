@@ -3,3 +3,7 @@ version: '${project.version}'
 main: me.adelemphii.skyburgerchallenges.SkyburgerChallenges
 api-version: '1.20'
 authors: [Adelemphii]
+
+commands:
+  skyburger:
+    description: Join Skyburger today!

@@ -33,7 +33,7 @@ public class BossBarManager {
         if(bossBar != null) {
             Bukkit.broadcast(Component.text(experienceManager.getLevels()));
             bossBar.setTitle("Total Levels: " + experienceManager.getLevels());
-            bossBar.setProgress(0.5d);
+            bossBar.setProgress(1.0d);
         }
     }
 
