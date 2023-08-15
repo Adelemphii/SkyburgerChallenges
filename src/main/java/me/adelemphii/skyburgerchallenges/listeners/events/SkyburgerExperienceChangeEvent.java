@@ -7,14 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class SkyburgerExperienceChangeEvent extends Event {
     private static final HandlerList HANDLERS = new HandlerList();
 
-    private final int amount;
-
-    public SkyburgerExperienceChangeEvent(int amount) {
-        this.amount = amount;
-    }
-
-    public int getAmount() {
-        return amount;
+    public SkyburgerExperienceChangeEvent() {
     }
 
     @Override
