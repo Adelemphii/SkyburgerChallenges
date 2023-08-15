@@ -1,0 +1,5 @@
+name: SkyburgerChallenges
+version: '${project.version}'
+main: me.adelemphii.skyburgerchallenges.SkyburgerChallenges
+api-version: '1.20'
+authors: [Adelemphii]
