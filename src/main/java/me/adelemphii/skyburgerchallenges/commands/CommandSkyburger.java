@@ -2,12 +2,18 @@ package me.adelemphii.skyburgerchallenges.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
+import me.adelemphii.skyburgerchallenges.utility.EffectUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+
+import java.util.stream.Collectors;
 
 @CommandAlias("skyburger|sb")
 public class CommandSkyburger extends BaseCommand {
@@ -16,6 +22,13 @@ public class CommandSkyburger extends BaseCommand {
 
     public CommandSkyburger(SkyburgerChallenges plugin) {
         this.plugin = plugin;
+
+        plugin.getPaperCommandManager().getCommandCompletions().registerCompletion("dead_players", (foo) ->
+                Bukkit.getOnlinePlayers()
+                        .stream()
+                        .filter(player -> player.getGameMode() == GameMode.SPECTATOR)
+                        .map(Player::getName)
+                        .collect(Collectors.toList()));
     }
 
     @Subcommand("set levels")
@@ -23,5 +36,12 @@ public class CommandSkyburger extends BaseCommand {
     public void onSetLevels(Player player, int levels) {
         plugin.getExperienceManager().setLevels(levels);
         player.sendMessage(Component.text("SkyburgerChallenges: Set levels to " + levels).color(NamedTextColor.RED));
+    }
+
+    @Subcommand("revive")
+    @CommandCompletion("@dead_players")
+    @CommandPermission("skyburger.admin")
+    public void onRevive(Player player, Player target) {
+        EffectUtility.revivePlayer(target, player.getWorld(), plugin);
     }
 }
