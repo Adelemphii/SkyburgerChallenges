@@ -19,7 +19,7 @@ public class SkyburgerHealthListener implements Listener {
     @EventHandler
     public void onSkyburgerHealthChange(SkyburgerHealthChangeEvent event) {
         Bukkit.getOnlinePlayers().forEach(player -> {
-            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(plugin.getPunishmentManager().getMaxHealth());
+            player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(event.getNewHealth());
 
             double radius = 1.5; // Radius of the pentagram effect
             PentagramEffect ominousEffect = new PentagramEffect(player, radius);

@@ -23,8 +23,9 @@ public class PunishmentManager {
     }
 
     public void setMaxHealth(int maxHealth) {
+        int oldHealth = this.maxHealth;
         this.maxHealth = maxHealth;
-        Bukkit.getPluginManager().callEvent(new SkyburgerHealthChangeEvent());
+        Bukkit.getPluginManager().callEvent(new SkyburgerHealthChangeEvent(oldHealth, maxHealth));
     }
 
     public int getMaxHealth() {
@@ -32,16 +33,18 @@ public class PunishmentManager {
     }
 
     public void decreaseMaxHealth(int remove) {
+        int oldHealth = this.maxHealth;
         maxHealth = maxHealth - remove;
         if(maxHealth <= 0) {
             maxHealth = 1;
         }
-        Bukkit.getPluginManager().callEvent(new SkyburgerHealthChangeEvent());
+        Bukkit.getPluginManager().callEvent(new SkyburgerHealthChangeEvent(oldHealth, maxHealth));
     }
 
     public void increaseMaxHealth(int add) {
+        int oldHealth = this.maxHealth;
         maxHealth = maxHealth + add;
-        Bukkit.getPluginManager().callEvent(new SkyburgerHealthChangeEvent());
+        Bukkit.getPluginManager().callEvent(new SkyburgerHealthChangeEvent(oldHealth, maxHealth));
     }
 
     public void loadPunishments() {
