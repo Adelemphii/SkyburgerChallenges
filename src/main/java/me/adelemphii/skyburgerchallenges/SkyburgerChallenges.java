@@ -55,6 +55,7 @@ public final class SkyburgerChallenges extends JavaPlugin {
 
         pm.registerEvents(new ExperienceListener(this), this);
         pm.registerEvents(new PlayerDeathListener(this), this);
+        pm.registerEvents(new HungerListener(), this);
 
         pm.registerEvents(new SkyburgerExperienceListener(this), this);
         pm.registerEvents(new SkyburgerHealthListener(this), this);
