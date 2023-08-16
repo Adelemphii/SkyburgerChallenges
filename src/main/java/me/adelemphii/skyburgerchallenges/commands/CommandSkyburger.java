@@ -71,4 +71,11 @@ public class CommandSkyburger extends BaseCommand {
         PentagramEffect pentagramEffect = new PentagramEffect(player, 1); // Adjust the radius as needed
         pentagramEffect.runTaskTimer(plugin, 0, 1L);
     }
+
+    @Subcommand("worldborder center")
+    @CommandPermission("skyburger.admin")
+    public void onCenter(Player player) {
+        plugin.getExperienceManager().getWorldBorderManager().setCenterLocation(player.getLocation());
+        player.sendMessage(Component.text("SkyburgerChallenges: Center set!").color(NamedTextColor.RED));
+    }
 }

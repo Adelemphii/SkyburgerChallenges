@@ -1,15 +1,18 @@
 package me.adelemphii.skyburgerchallenges.managers;
 
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
-
-import java.util.concurrent.TimeUnit;
+import org.bukkit.entity.Player;
 
 public class WorldBorderManager {
 
     private final ExperienceManager experienceManager;
     private final SkyburgerChallenges plugin;
+
+    private Location centerLocation;
 
     public WorldBorderManager(SkyburgerChallenges plugin, ExperienceManager experienceManager) {
         this.plugin = plugin;
@@ -20,31 +23,42 @@ public class WorldBorderManager {
         int xpAmount = experienceManager.getLevels();
 
         for (World world : plugin.getServer().getWorlds()) {
-            updateWorldBorder(world, xpAmount);
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                updateWorldBorder(player, xpAmount);
+            }
         }
     }
 
-    private void updateWorldBorder(World world, int levels) {
+    public WorldBorder updateWorldBorder(Player player, int levels) {
         double newSize = calculateNewBorderSize(levels);
+        WorldBorder worldBorder = player.getWorldBorder() != null ? player.getWorldBorder() : Bukkit.createWorldBorder();
 
-        WorldBorder worldBorder = world.getWorldBorder();
-        long timeInSeconds = calculateTimeInSeconds(worldBorder.getSize(), newSize);
-        worldBorder.setSize(newSize, TimeUnit.SECONDS, timeInSeconds);
+        worldBorder.setCenter(-8, -7);
+        worldBorder.setSize(newSize);
+
+        player.setWorldBorder(worldBorder);
+        return worldBorder;
     }
 
     private double calculateNewBorderSize(int levels) {
-        return Math.max(5.5, 5.5 + levels);
+        return Math.max(6, 6 + (levels));
     }
 
-    private long calculateTimeInSeconds(double currentSize, double newSize) {
-        double distance = Math.abs(newSize - currentSize);
+    public void setCenterLocation(Location location) {
+        this.centerLocation = location;
+    }
 
-        if (distance <= 7) {
-            // For distances up to 7 blocks, use a constant speed of 1 block per second
-            return (long) distance;
-        } else {
-            // For distances larger than 7 blocks, adjust the speed as needed (e.g., 7 blocks per second)
-            return (long) (distance / 10);
-        }
+    public Location getCenterLocation() {
+        return centerLocation;
+    }
+
+    public void saveCenterLocation() {
+        plugin.getConfig().set("center-location", centerLocation);
+        plugin.saveConfig();
+    }
+
+    public void loadLocation() {
+        this.centerLocation = plugin.getConfig().getLocation("center-location",
+                new Location(Bukkit.getWorld("world"), 0, 0, 0));
     }
 }

@@ -23,6 +23,7 @@ public final class SkyburgerChallenges extends JavaPlugin {
         this.experienceManager = new ExperienceManager(this);
         experienceManager.loadExperience();
         experienceManager.getBossBarManager().createBossBar();
+        experienceManager.getWorldBorderManager().loadLocation();
 
         this.punishmentManager = new PunishmentManager(this);
         punishmentManager.loadPunishments();
@@ -35,6 +36,7 @@ public final class SkyburgerChallenges extends JavaPlugin {
     public void onDisable() {
         if(experienceManager != null) {
             experienceManager.saveExperience();
+            experienceManager.getWorldBorderManager().saveCenterLocation();
 
             Bukkit.getOnlinePlayers().forEach(player -> experienceManager.getBossBarManager().removePlayerFromBossBar(player));
         }
