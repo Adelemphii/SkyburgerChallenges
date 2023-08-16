@@ -53,6 +53,7 @@ public class ReviveEffect extends BukkitRunnable {
         player.setGameMode(GameMode.SURVIVAL);
 
         player.setHealth(10);
+        player.setFoodLevel(20);
         player.setSaturation(20);
         player.teleport(location);
 

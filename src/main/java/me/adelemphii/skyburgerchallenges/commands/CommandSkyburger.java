@@ -46,10 +46,22 @@ public class CommandSkyburger extends BaseCommand {
         player.sendMessage(Component.text("SkyburgerChallenges: Set max health to " + maxHealth).color(NamedTextColor.RED));
     }
 
+    @Subcommand("restore maxhealth")
+    @CommandPermission("skyburger.admin")
+    public void onRestoreMaxhealth(Player player) {
+        plugin.getPunishmentManager().setMaxHealth(20);
+        player.sendMessage(Component.text("SkyburgerChallenges: Restored max health to 20").color(NamedTextColor.RED));
+    }
+
     @Subcommand("revive")
     @CommandCompletion("@dead_players")
     @CommandPermission("skyburger.admin")
     public void onRevive(Player player, Player target) {
+        if(target.getGameMode() != GameMode.SPECTATOR) {
+            player.sendMessage(Component.text("That player is not in spectator mode."));
+            return;
+        }
+
         EffectUtility.revivePlayer(target, player.getWorld(), plugin);
     }
 
