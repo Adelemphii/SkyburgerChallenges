@@ -58,7 +58,7 @@ public class CommandSkyburger extends BaseCommand {
     @CommandPermission("skyburger.admin")
     public void onRevive(Player player, Player target) {
         if(target.getGameMode() != GameMode.SPECTATOR) {
-            player.sendMessage(Component.text("That player is not in spectator mode."));
+            player.sendMessage(Component.text("That player is not in dead.").color(NamedTextColor.RED));
             return;
         }
 
