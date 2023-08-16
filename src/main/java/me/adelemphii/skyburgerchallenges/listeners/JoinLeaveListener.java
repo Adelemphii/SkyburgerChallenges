@@ -25,8 +25,8 @@ public class JoinLeaveListener implements Listener {
         player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(plugin.getPunishmentManager().getMaxHealth());
 
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            WorldBorder worldBorder = plugin.getExperienceManager().getWorldBorderManager().updateWorldBorder(player,
-                    plugin.getExperienceManager().getLevels());
+            WorldBorder worldBorder = plugin.getExperienceManager().getWorldBorderManager()
+                    .updateWorldBorder(player, plugin.getExperienceManager().getLevels());
 
             if(!worldBorder.isInside(player.getLocation())) {
                 player.teleport(worldBorder.getCenter().toHighestLocation().add(0, 1, 0));

@@ -6,13 +6,17 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
+import me.adelemphii.skyburgerchallenges.managers.ExperienceManager;
 import me.adelemphii.skyburgerchallenges.objects.effects.PentagramEffect;
 import me.adelemphii.skyburgerchallenges.utility.EffectUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.stream.Collectors;
 
@@ -75,7 +79,19 @@ public class CommandSkyburger extends BaseCommand {
     @Subcommand("worldborder center")
     @CommandPermission("skyburger.admin")
     public void onCenter(Player player) {
-        plugin.getExperienceManager().getWorldBorderManager().setCenterLocation(player.getLocation());
-        player.sendMessage(Component.text("SkyburgerChallenges: Center set!").color(NamedTextColor.RED));
+        ExperienceManager experienceManager = plugin.getExperienceManager();
+        World world = player.getWorld();
+        Location playerLocation = player.getLocation();
+
+        switch(world.getEnvironment()) {
+            case NETHER: experienceManager.getWorldBorderManager()
+                    .setNetherCenter(new Vector(
+                            playerLocation.getBlockX(), playerLocation.getBlockY(), playerLocation.getBlockZ()
+                    ));
+            case NORMAL: experienceManager.getWorldBorderManager()
+                    .setOverworldCenter(new Vector(
+                            playerLocation.getBlockX(), playerLocation.getBlockY(), playerLocation.getBlockZ()
+                    ));
+        }
     }
 }
