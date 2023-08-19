@@ -1,7 +1,11 @@
 package me.adelemphii.skyburgerchallenges.food;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
 import me.adelemphii.skyburgerchallenges.food.object.FoodItem;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -68,14 +72,14 @@ public class MilkBeer extends FoodItem {
                     new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1200, 1)
             ));
 
-            /* TODO: I will figure this out later, it's midnight.
-            PacketContainer fakeElderGuardian = new PacketContainer(PacketType.Play.Server.WORLD_PARTICLES);
-            fakeElderGuardian.getParticles().write(0, EnumWrappers.Particle.TOTEM);
-            fakeElderGuardian.getIntegers()
-                    .write(0, 56);
+            PacketContainer fakeEvent = new PacketContainer(PacketType.Play.Server.GAME_STATE_CHANGE);
+            fakeEvent.getGameStateIDs()
+                    .write(0, 10);
+            fakeEvent.getFloat().write(0, 0f);
 
-            SkyburgerChallenges.getInstance().getProtocolManager().sendServerPacket(player, fakeElderGuardian);
-            */
+            player.playSound(Sound.sound(Key.key("entity.elder_guardian.curse"),
+                    Sound.Source.HOSTILE, 1f, 1f));
+            SkyburgerChallenges.getInstance().getProtocolManager().sendServerPacket(player, fakeEvent);
         }, 10L);
     }
 
