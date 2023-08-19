@@ -45,6 +45,7 @@ public class ReviveEffect extends BukkitRunnable {
         revivePlayer(player);
         SwirlEffect swirlEffect = new SwirlEffect(player, Particle.TOTEM, 1);
         swirlEffect.runTaskTimer(plugin, 0L, 1L);
+        player.playEffect(EntityEffect.TOTEM_RESURRECT);
 
         this.cancel();
     }
