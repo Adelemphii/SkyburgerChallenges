@@ -1,12 +1,9 @@
 package me.adelemphii.skyburgerchallenges.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.*;
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
 import me.adelemphii.skyburgerchallenges.managers.ExperienceManager;
-import me.adelemphii.skyburgerchallenges.objects.effects.PentagramEffect;
 import me.adelemphii.skyburgerchallenges.utility.EffectUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -57,20 +54,14 @@ public class CommandSkyburger extends BaseCommand {
     }
 
     @Subcommand("revive")
+    @CommandCompletion("@dead_players")
     @CommandPermission("skyburger.admin")
-    public void onRevive(Player player, Player target) {
+    public void onRevive(Player player, @Flags("other,defaultself") @Optional Player target) {
         if(target.getGameMode() != GameMode.SPECTATOR) {
             player.sendMessage(Component.text("That player is not dead.").color(NamedTextColor.RED));
             return;
         }
         EffectUtility.revivePlayer(target, player.getWorld(), plugin);
-    }
-
-    @Subcommand("pentagram")
-    @CommandPermission("skyburger.admin")
-    public void onPentagram(Player player) {
-        PentagramEffect pentagramEffect = new PentagramEffect(player, 1); // Adjust the radius as needed
-        pentagramEffect.runTaskTimer(plugin, 0, 1L);
     }
 
     @Subcommand("worldborder center")
