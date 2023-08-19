@@ -57,6 +57,7 @@ public class MilkBeer extends FoodItem {
         shapeless.addIngredient(Material.WHEAT);
         shapeless.addIngredient(Material.WHEAT_SEEDS);
         shapeless.addIngredient(Material.BARREL);
+        shapeless.addIngredient(Material.BUCKET);
 
         return shapeless;
     }
