@@ -2,7 +2,6 @@ package me.adelemphii.skyburgerchallenges.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import me.adelemphii.skyburgerchallenges.SkyburgerChallenges;
@@ -58,14 +57,12 @@ public class CommandSkyburger extends BaseCommand {
     }
 
     @Subcommand("revive")
-    @CommandCompletion("@dead_players")
     @CommandPermission("skyburger.admin")
     public void onRevive(Player player, Player target) {
         if(target.getGameMode() != GameMode.SPECTATOR) {
-            player.sendMessage(Component.text("That player is not in dead.").color(NamedTextColor.RED));
+            player.sendMessage(Component.text("That player is not dead.").color(NamedTextColor.RED));
             return;
         }
-
         EffectUtility.revivePlayer(target, player.getWorld(), plugin);
     }
 
