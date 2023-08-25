@@ -11,7 +11,6 @@ public class ExperienceManager {
     private final WorldBorderManager worldBorderManager;
     private final BossBarManager bossBarManager;
 
-    private int totalExperiencePoints = 0;
     private int levels = 0;
 
     public ExperienceManager(SkyburgerChallenges plugin) {
@@ -28,36 +27,17 @@ public class ExperienceManager {
         }.runTaskTimerAsynchronously(plugin, 0, 72000L);
     }
 
-    public void setTotalExperiencePoints(int totalExperiencePoints) {
-        this.totalExperiencePoints = totalExperiencePoints;
-        Bukkit.getPluginManager().callEvent(new SkyburgerExperienceChangeEvent());
-    }
-
     public void setLevels(int levels) {
         this.levels = levels;
         Bukkit.getPluginManager().callEvent(new SkyburgerExperienceChangeEvent());
-    }
-
-    public int getTotalExperiencePoints() {
-        return totalExperiencePoints;
     }
 
     public int getLevels() {
         return levels;
     }
 
-    public void addExperience(int experiencePoints) {
-        this.totalExperiencePoints += experiencePoints;
-        Bukkit.getPluginManager().callEvent(new SkyburgerExperienceChangeEvent());
-    }
-
     public void addLevels(int levels) {
         this.levels += levels;
-        Bukkit.getPluginManager().callEvent(new SkyburgerExperienceChangeEvent());
-    }
-
-    public void removeExperience(int experiencePoints) {
-        this.totalExperiencePoints -= experiencePoints;
         Bukkit.getPluginManager().callEvent(new SkyburgerExperienceChangeEvent());
     }
 
@@ -78,11 +58,9 @@ public class ExperienceManager {
     // It's for a friend group and it's simple.
     public void loadExperience() {
         this.levels = plugin.getConfig().getInt("total-levels", 0);
-        this.totalExperiencePoints = plugin.getConfig().getInt("total-experience", 0);
     }
 
     public void saveExperience() {
-        plugin.getConfig().set("total-experience", this.getTotalExperiencePoints());
         plugin.getConfig().set("total-levels", this.getLevels());
         plugin.saveConfig();
     }
