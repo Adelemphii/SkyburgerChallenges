@@ -29,7 +29,11 @@ public class ExperienceCapListener implements Listener {
         int currentXP = xpRequired - xpRemaining;
         if(currentXP >= requiredExperienceCap) {
             player.setExp(0.0f);
-            player.setLevel(player.getLevel() + 1);
+
+            int levelsToIncrease = Math.round((float) currentXP / requiredExperienceCap);
+
+            int newLevel = currentLevel + levelsToIncrease;
+            player.setLevel(newLevel);
         }
     }
 }
