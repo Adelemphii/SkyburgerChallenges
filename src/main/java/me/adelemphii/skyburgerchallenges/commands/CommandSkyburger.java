@@ -46,6 +46,13 @@ public class CommandSkyburger extends BaseCommand {
         player.sendMessage(Component.text("SkyburgerChallenges: Set max health to " + maxHealth).color(NamedTextColor.RED));
     }
 
+    @Subcommand("set experiencecap")
+    @CommandPermission("skyburger.admin")
+    public void onSetExperienceCap(Player player, int level) {
+        plugin.getExperienceManager().setRequiredExperienceCapLevel(level);
+        player.sendMessage(Component.text("SkyburgerChallenges: Set experience cap level to " + level).color(NamedTextColor.RED));
+    }
+
     @Subcommand("restore maxhealth")
     @CommandPermission("skyburger.admin")
     public void onRestoreMaxhealth(Player player) {
