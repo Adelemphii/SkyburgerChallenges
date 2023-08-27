@@ -18,6 +18,8 @@ public class WorldBorderManager {
     public WorldBorderManager(SkyburgerChallenges plugin, ExperienceManager experienceManager) {
         this.plugin = plugin;
         this.experienceManager = experienceManager;
+
+        startWorldBorderCheck();
     }
 
     public void updateWorldBorders() {
@@ -62,6 +64,21 @@ public class WorldBorderManager {
 
     private double calculateNewBorderSize(int levels) {
         return Math.max(6, 6 + (levels));
+    }
+
+    public void startWorldBorderCheck() {
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                WorldBorder worldBorder = player.getWorldBorder();
+                if(worldBorder == null) {
+                    continue;
+                }
+
+                if(!worldBorder.isInside(player.getLocation())) {
+                    player.damage(1);
+                }
+            }
+        }, 0, 20L);
     }
 
     public void setOverworldCenter(Vector overworldCenter) {
