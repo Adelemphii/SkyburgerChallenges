@@ -42,6 +42,8 @@ public final class SkyburgerChallenges extends JavaPlugin {
 
         registerCommands();
         registerEvents();
+
+        experienceManager.getWorldBorderManager().updateWorldBorders();
     }
 
     @Override
