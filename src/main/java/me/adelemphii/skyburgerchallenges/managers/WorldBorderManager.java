@@ -63,7 +63,7 @@ public class WorldBorderManager {
     }
 
     private double calculateNewBorderSize(int levels) {
-        return Math.max(6, 6 + (levels));
+        return Math.max(6, 6 + (levels)) * 2;
     }
 
     public void startWorldBorderCheck() {
